@@ -1,6 +1,7 @@
 const apiKey = '834f764d7be31593842c35c586412807'; // Replace with your actual API key
 const cityInput = document.getElementById('city-input');
 const searchBtn = document.getElementById('search-btn');
+const weatherInfo = document.getElementById('weather-info');
 
 searchBtn.addEventListener('click', () => {
     const city = cityInput.value;
@@ -20,10 +21,14 @@ cityInput.addEventListener('keypress', (e) => {
 
 async function getWeather(city) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+    console.log('Fetching weather for:', city);
+    console.log('API URL:', apiUrl);
 
     try {
         const response = await fetch(apiUrl);
+        console.log('Response status:', response.status);
         const data = await response.json();
+        console.log('API response:', data);
 
         if (data.cod === '404') {
             alert('City not found. Please try again.');
@@ -32,8 +37,8 @@ async function getWeather(city) {
 
         displayWeather(data);
     } catch (error) {
-        console.error('Error fetching weather data:', error);
-        alert('An error occurred while fetching weather data. Please try again.');
+        console.error('Detailed error:', error);
+        alert('An error occurred while fetching weather data. Please check the console for more details.');
     }
 }
 
@@ -47,7 +52,7 @@ function displayWeather(data) {
     document.getElementById('description').textContent = currentWeather.weather[0].description;
     
     const iconCode = currentWeather.weather[0].icon;
-    document.getElementById('weather-icon').src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    document.getElementById('weather-icon').src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
     const forecast = document.querySelector('.forecast');
     forecast.innerHTML = '';
@@ -61,14 +66,13 @@ function displayWeather(data) {
         forecastDay.classList.add('forecast-day');
         forecastDay.innerHTML = `
             <p>${dayName}</p>
-            <img src="http://openweathermap.org/img/wn/${iconCode}.png" alt="Weather Icon">
+            <img src="https://openweathermap.org/img/wn/${iconCode}.png" alt="Weather Icon">
             <p>${Math.round(dayData.main.temp_max)}/${Math.round(dayData.main.temp_min)}</p>
         `;
         forecast.appendChild(forecastDay);
     }
 
-    // Hide landing page and show weather info
-    document.getElementById('landing-page').style.display = 'none';
+    // Show the weather info
     weatherInfo.style.display = 'block';
 }
 
@@ -85,6 +89,3 @@ cityInput.addEventListener('input', function() {
         resetView();
     }
 });
-
-// Initial weather load (you can set a default city)
-getWeather('Chandigarh');
