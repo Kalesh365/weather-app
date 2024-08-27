@@ -3,22 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
+    <title>Weather Explorer</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Weather App</h1>
-        <div class="search">
-            <input type="text" id="city-input" placeholder="Enter city name">
-            <button id="search-btn">Search</button>
+        <div class="landing-page" id="landing-page">
+            <h1>Weather Explorer</h1>
+            <p>Discover the weather around the world!</p>
+            <div class="search-box">
+                <input type="text" id="city-input" placeholder="Enter city name">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
+            </div>
         </div>
-        <div id="weather-info" class="weather-info">
-            <h2 id="city-name"></h2>
-            <p id="temperature"></p>
+        <div class="weather-card" id="weather-info" style="display: none;">
+            <h1 id="city-name"></h1>
+            <div class="current-weather">
+                <img id="weather-icon" src="" alt="Weather Icon">
+                <h2 id="temperature"></h2>
+            </div>
+            <p id="temp-range"><span id="min-temp"></span> <span id="max-temp"></span></p>
             <p id="description"></p>
+            <div class="forecast">
+                <!-- Forecast days will be added here by JavaScript -->
+            </div>
         </div>
-        <div id="forecast" class="forecast"></div>
     </div>
     <script src="script.js"></script>
 </body>
